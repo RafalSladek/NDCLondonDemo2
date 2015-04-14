@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ndcworkshopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="ndcworkshopEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Articles" EntityType="ndcworkshopModel.Article" />
+    <EntitySet Name="Categories" EntityType="ndcworkshopModel.Category" />
+    <AssociationSet Name="FK_dbo_Articles_dbo_Categories_CategoryId" Association="ndcworkshopModel.FK_dbo_Articles_dbo_Categories_CategoryId">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="Article" EntitySet="Articles" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Article">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <Property Name="Code" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <Property Name="ImageUrl" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <Property Name="CategoryId" Type="Guid" Nullable="false" />
+    <NavigationProperty Name="Category" Relationship="ndcworkshopModel.FK_dbo_Articles_dbo_Categories_CategoryId" FromRole="Article" ToRole="Category" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Articles" Relationship="ndcworkshopModel.FK_dbo_Articles_dbo_Categories_CategoryId" FromRole="Category" ToRole="Article" />
+  </EntityType>
+  <Association Name="FK_dbo_Articles_dbo_Categories_CategoryId">
+    <End Type="ndcworkshopModel.Category" Role="Category" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="ndcworkshopModel.Article" Role="Article" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Article">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

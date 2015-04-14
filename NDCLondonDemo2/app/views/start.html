@@ -1,0 +1,66 @@
+﻿<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span3">
+            <div class="container-fluid">
+                <i class="btn btn-success icon-plus" ng-click="addNewArticle()"></i>
+                <br />
+                <br />
+                <table class="table table-striped">
+                    <tr>
+                        <th class="active-link" ng-click="predicate = 'Name'; reverse=!reverse">Name</th>
+                        <th />
+                    </tr>
+                    <tr ng-repeat="a in articles | orderBy:predicate:reverse">
+                        <td class="active-link" ng-click="loadDetails(a)">{{ a.Name}}</td>
+                        <td><i class="btn icon-trash" ng-click="deleteArticle(a)"></i></td>
+                    </tr>
+                </table>
+                <pagination boundary-links="true" total-items="totalItems" page="currentPage" class="pagination-small" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                <div class="pagination">
+                    <ul>
+                        <li class="ng-binding" ng-click="setPage(currentPage- 1)" ng-if="currentPage > 0"><</li>
+                        <li>The selected page no: {{currentPage}}</li>
+                        <li class="ng-binding" ng-click="setPage(currentPage+1)">></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="span9" ng-if="currentArticle">
+            <div class="container-fluid">
+                <div class="row">
+                    <form name="form" novalidate class="form-horizontal">
+                        <fieldset>
+                            <h3>Product</h3>
+                            <div class="control-group">
+                                <label class="control-label">Name</label>
+                                <div class="controls">
+                                    <input ng-model="currentArticle.Name" required id="name" name="name" type="text" placeholder="Article name" class="input-xlarge">
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">Code</label>
+                                <div class="controls">
+                                    <input ng-model="currentArticle.Code" required id="code" name="code" type="text" placeholder="Article code" class="input-xlarge">
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">Description</label>
+                                <div class="controls">
+                                    <input ng-model="currentArticle.Description" required id="desc" name="desc" type="text" placeholder="Description" class="input-xlarge">
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button ng-disabled="form.$invalid" class="btn btn-success" ng-click="saveArticle()">Save</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
